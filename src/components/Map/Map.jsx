@@ -15,9 +15,10 @@ class Map extends React.Component {
     }
     
     componentDidMount() {
-        fetch(
-"https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/latest?limit=100&page=1&offset=0&sort=desc&has_geo=true&radius=1000&country_id=DE&order_by=lastUpdated&dumpRaw=false")
-            .then((res) => res.json())
+
+      const apiEndpoint = "https://docs.openaq.org/v2/measurements?date_from=2000-01-01T00%3A00%3A00%2B00%3A00&     date_to=2022-04-08T13%3A46%3A00%2B00%3A00&limit=100&page=1&offset=0&sort=desc&radius=1000&country_id=DE&order_by=datetime";
+        fetch(apiEndpoint)
+            .then((response) => response.json())
             .then((json) => {
                 this.setState({
                     dataFromApi: json.results,
@@ -25,30 +26,70 @@ class Map extends React.Component {
                 });
             })
     }
+
+    transformData (data) {
+      const parameters = ["um025", "um100", "pm25", "pm10", "um010", "pm1"]
+      const colors = ['#FF6633', '#E6B333', '#80B300', '#FF99E6', '#66664D', '#FF3380']
+
+      let plotData = []
+
+      for (let i=0; i< parameters.length; i++) {
+        let location = [];
+        let date = [];
+        let lat = [];
+        let lon = [];
+        let parameter = [];
+        let unit = [];
+        let value = [];
+
+        data.forEach((d) => {
+          if (d.parameter === parameters[i]){
+            location.push(d.location)
+            date.push(d.date.utc)
+            lat.push(d.coordinates.latitude)
+            lon.push(d.coordinates.longitude)
+            parameter.push(d.parameter)
+            value.push(d.value)
+            unit.push(d.unit)
+
+          }
+        })
+        plotData.push(
+          {
+            'name': parameters[i],
+            'type': 'scattermapbox',
+            'text': location,
+            'location': location,
+            'time': date,
+            'lat': lat,
+            'lon': lon,
+            'value': value,
+            'unit': unit,
+            'markers': {
+              size: 12,
+              color: colors[i],
+              opacity: 0.7
+            }
+          }
+        )
+      }
+
+      return plotData
+    }
+
+    
+
+
   
     render() {
-
-
-      // data for the map: [{type, name, lat, lon},{}...]
-      var data = []
-      
-      this.state.dataFromApi.forEach((d) => {
-        var infoObj = {}
-        if (d.city != null) {
-          infoObj['type'] = 'scattermapbox';
-          infoObj['name'] = d.city;
-          infoObj['lat'] = d.coordinates.latitude;
-          infoObj['lon'] = d.coordinates.longitude;
-          data.push(infoObj)
-        }
-      })
-      console.log(data)
 
       var layout = {
           title: 'German cities environment measurements',
           font: {
             color: 'white'
           },
+          width: document.body.clientWidth/1.2,
+          height: document.body.clientHeight/1.2,
           dragmode: 'zoom',
           mapbox: {
             center: {
@@ -84,8 +125,9 @@ class Map extends React.Component {
      
       return (
         <div>
+          {console.log(this.transformData(this.state.dataFromApi))}
           <Plot 
-            data = {data}
+            data = {this.transformData(this.state.dataFromApi)}
             layout = {layout}
             config={{mapboxAccessToken: 'pk.eyJ1IjoidmFuZHVuZ2RvIiwiYSI6ImNsMW5yZ2I3YzBzbW0zY3FyNWNnbXQ3ZnkifQ.WqALjHnOnwCvEWSXhXGumQ'}}
           />  
