@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 
-class Map extends React.Component {
+class Map2 extends React.Component {
    
     // Constructor 
     constructor(props) {
@@ -28,63 +28,61 @@ class Map extends React.Component {
     }
 
     transformData (data) {
-      const parameters = ["um025", "um100", "pm25", "pm10", "um010", "pm1"]
-      const colors = ['blue', 'green', 'red', 'cyan', 'yellow', 'magenta']
+      const param = "pm25"
+      const color = 'red'
 
       let plotData = []
 
-      for (let i=0; i< parameters.length; i++) {
-        let location = [];
-        let date = [];
-        let lat = [];
-        let lon = [];
-        let parameter = [];
-        let unit = [];
-        let value = [];
-        let hoverInfor = [];
-        let size = [];
+      let location = [];
+      let date = [];
+      let lat = [];
+      let lon = [];
+      let parameter = [];
+      let unit = [];
+      let value = [];
+      let hoverInfor = [];
+      let size = [];
 
-        data.forEach((d) => {
-          if (d.parameter === parameters[i]){
-            location.push(d.location)
-            date.push(d.date.utc)
-            lat.push(d.coordinates.latitude)
-            lon.push(d.coordinates.longitude)
-            parameter.push(d.parameter)
-            value.push(d.value)
-            unit.push(d.unit)
-            hoverInfor.push(d.location + " - " + d.date.utc)
-            size.push(d.value)
+      data.forEach((d) => {
+        if (d.parameter === param){
+          location.push(d.location)
+          date.push(d.date.utc)
+          lat.push(d.coordinates.latitude)
+          lon.push(d.coordinates.longitude)
+          parameter.push(d.parameter)
+          value.push(d.value)
+          unit.push(d.unit)
+          hoverInfor.push(d.location + " - " + d.date.utc)
+          size.push(d.value)
 
+        }
+      })
+      plotData.push(
+        {
+          'name': 'air particulate pollutant &#8804; 2.5 microns [µg/m³]',
+          'type': 'scattermapbox',
+          'text': hoverInfor,
+          'location': location,
+          'size': size,
+          'time': date,
+          'lat': lat,
+          'lon': lon,
+          'value': value,
+          'unit': unit,
+          'opacity': 0.5,
+          hovertemplate:
+          "<b>%{text}</b><br>" +
+          "lat: %{lat}<br>" +
+          "lon: %{lon}<br>" +
+          "value: %{marker.size}" +
+          "<extra></extra>"
+          ,
+          'marker': {
+            size: size,
+            color: color,
           }
-        })
-        plotData.push(
-          {
-            'name': parameters[i],
-            'type': 'scattermapbox',
-            'text': hoverInfor,
-            'location': location,
-            'size': size,
-            'time': date,
-            'lat': lat,
-            'lon': lon,
-            'value': value,
-            'unit': unit,
-            'opacity': 0.5,
-            hovertemplate:
-            "<b>%{text}</b><br>" +
-            "lat: %{lat}<br>" +
-            "lon: %{lon}<br>" +
-            "value: %{marker.size}<br>" +
-            "<extra></extra>"
-            ,
-            'marker': {
-              size: size,
-              color: colors[i],
-            }
-          }
-        )
-      }
+        }
+      )
       return plotData
     }
 
@@ -148,4 +146,4 @@ class Map extends React.Component {
     }
 }
    
-export default Map;
+export default Map2;
