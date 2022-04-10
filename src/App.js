@@ -1,13 +1,11 @@
 import './App.css';
-import Map from './components/Map/Map';
-import Map2 from './components/Map2/Map2';
+import Plots from './components/Plots/Plots';
 
 function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<Map />
-				<Map2 />
+				<Plots />
 			</header>
 		</div>
 	);
