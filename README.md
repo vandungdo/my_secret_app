@@ -1,13 +1,22 @@
-# Getting Started with Create React App
+# Germany Environmental Measurements Data Visualization
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### An Introduction Of The Application
 
-## Available Scripts
+This is a small frontend application, which visualizes the environmental measurements data of German cities. The data was collected from an API, which is provided by OpenAQ. OpenAQ is a non-profit organization empowering communities around the globe to clean their air by harmonizing, sharing, and using open air quality data. Read more [openaq.org](https://openaq.org/#/)
 
-In the project directory, you can run:
+Some screenshots from the application
+![The stacked bar plot of German cities with environmental parameters data](public/stacked_bar_environment.png)
+![The map plot of German cities with environmental parameters data](public/map_environment.png)
 
-### `npm start`
+### Tech stack
+- **React.js**: it is a free and open-source Javascript framework/library for building user interfaces based on UI components.
+- **Plotly.js**: it is an open-source graph library, which built on top of d3.js and stack.gl. Plotly.js is a high-lvel, declarative charting library.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Run The Application
+1. Clone this Github repository
+2. Go to my_secret_app folder
+3. Run `npm install`
+4. Run `npm start`
+5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
 
