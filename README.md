@@ -5,6 +5,7 @@
 This is a small frontend application, which visualizes the environmental measurements data of German cities. The data was collected from an API, which is provided by OpenAQ. OpenAQ is a non-profit organization empowering communities around the globe to clean their air by harmonizing, sharing, and using open air quality data. Read more [openaq.org](https://openaq.org/#/)
 
 Some screenshots from the application
+<br>
 ![The stacked bar plot of German cities with environmental parameters data](public/stacked_bar_environment.png)
 ![The map plot of German cities with environmental parameters data](public/map_environment.png)
 
@@ -19,4 +20,8 @@ Some screenshots from the application
 4. Run `npm start`
 5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
+### Contact Me
+[LinkedIn](https://www.linkedin.com/in/van-dung-do-599687199/) 
+<br>
+Mail: dung.dovan@hotmail.com
 
